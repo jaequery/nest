@@ -12,20 +12,16 @@ export class ProductController {
 
   @Get()
   async products() {
-    console.log('showing products');    
     return await this.productService.productRepository.find();    
   }
 
-  @Get('both')
-  async both() {
-    console.log('showing both');    
-    const products = await this.productService.productRepository.find();     
-    return { products};
+  @Get('hello')
+  hello(){
+    return "hello";
   }
 
   @Get(':id([0-9])')
   async product(@Param('id', ParseIntPipe) id: number,) {
-    console.log('showing products');    
     return await this.productService.productRepository.findOne(id);    
   }
   

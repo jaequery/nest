@@ -12,8 +12,12 @@ export class UserController {
 
   @Get()
   async users() {
-    console.log('showing users');    
     return await this.userService.userRepository.find();    
+  }
+
+  @Get('something')
+  something () {
+    return { name: 'some thing' };
   }
 
   @Get('bunch')
@@ -23,7 +27,6 @@ export class UserController {
 
   @Get(':id([0-9])')
   async user(@Param('id', ParseIntPipe) id: number,) {
-    console.log('showing users');    
     return await this.userService.userRepository.findOne(id);    
   }
   
