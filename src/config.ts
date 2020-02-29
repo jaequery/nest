@@ -13,4 +13,4 @@ switch (process.env.NODE_ENV) {
 }
 dotenv.config({ path: path });
 
-export const env = process.env;
+export const Config = { dotenv };

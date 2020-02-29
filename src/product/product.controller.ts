@@ -11,7 +11,7 @@ export class ProductController {
   ) { }
 
   @Get()
-  async products() {
+  async getProducts() {
     return await this.productService.productRepository.find();    
   }
 
@@ -20,8 +20,14 @@ export class ProductController {
     return "hello";
   }
 
+
+  @Get('something')
+  something () {
+    return { name: 'some thing' };
+  }
+
   @Get(':id([0-9])')
-  async product(@Param('id', ParseIntPipe) id: number,) {
+  async getProduct(@Param('id', ParseIntPipe) id: number,) {
     return await this.productService.productRepository.findOne(id);    
   }
   
