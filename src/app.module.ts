@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductController } from './product/product.controller';
+import { Product } from './product/product.entity';
+import { ProductService } from './product/product.service';
 
-import { ProductController } from './product.controller';
-import { Product } from './product.entity';
-import { ProductService } from './product.service';
+import { User } from './user/user.entity';
+import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
@@ -15,18 +18,20 @@ import { ProductService } from './product.service';
       password: '',
       database: 'jae',
       entities: [
-        __dirname + '/*.entity{.ts,.js}',
+        __dirname + '/**/*.entity{.ts,.js}',
       ],
       synchronize: true,
-      logging: true
+      logging: false
     }),
-    TypeOrmModule.forFeature([Product])    
+    TypeOrmModule.forFeature([
+      Product, User
+    ])    
   ],
   controllers: [
-    ProductController
+    ProductController, UserController
   ],
   providers: [
-    ProductService
+    ProductService, UserService
   ],
 })
 export class AppModule { }
