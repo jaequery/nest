@@ -1,24 +1,28 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AppService } from '../app.service';
+
+import { Util } from '../util';
 
 import { User } from './user.entity';
 import { Product } from '../product/product.entity';
 
+const util = new Util;
+
 @Injectable()
-export class UserService extends AppService {
+export class UserService {
   
   constructor(
-    @InjectRepository(User) protected readonly userRepository: Repository<User>,
-    @InjectRepository(Product) protected readonly productRepository: Repository<Product>,
-  ) {
-    super(userRepository);
-  }
+    @InjectRepository(User) public userRepository: Repository<User>,
+    @InjectRepository(Product) public productRepository: Repository<Product>
+  ) { }
 
   async findBunch() {
     const users = await this.userRepository.find();
     const products = await this.productRepository.find();
-    return { users, products };
+    
+    
+    const email = util.sendEmail();
+    return { users, products, email };
   }
 }

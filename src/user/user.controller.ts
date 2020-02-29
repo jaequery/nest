@@ -7,24 +7,24 @@ import { UserService } from './user.service';
 export class UserController {
 
   constructor(
-    protected readonly userService: UserService
+    private userService: UserService
   ) { }
 
   @Get()
   async users() {
     console.log('showing users');    
-    return await this.userService.findAll();    
+    return await this.userService.userRepository.find();    
   }
 
-  @Get('wtf')
-  async both() {
+  @Get('bunch')
+  async bunch() {
     return this.userService.findBunch();
   }
 
   @Get(':id([0-9])')
   async user(@Param('id', ParseIntPipe) id: number,) {
     console.log('showing users');    
-    return await this.userService.findById(id);    
+    return await this.userService.userRepository.findOne(id);    
   }
   
 }

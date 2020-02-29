@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { ProductController } from './product/product.controller';
 import { Product } from './product/product.entity';
 import { ProductService } from './product/product.service';
@@ -12,11 +13,11 @@ import { UserService } from './user/user.service';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost.docker',
+      host: 'localhost',
       port: 5432,
-      username: 'root',
+      username: 'postgres',
       password: '',
-      database: 'jae',
+      database: 'nest',
       entities: [
         __dirname + '/**/*.entity{.ts,.js}',
       ],

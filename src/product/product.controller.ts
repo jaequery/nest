@@ -7,26 +7,26 @@ import { ProductService } from './product.service';
 export class ProductController {
 
   constructor(
-    protected readonly productService: ProductService
+    private productService: ProductService
   ) { }
 
   @Get()
   async products() {
     console.log('showing products');    
-    return await this.productService.findAll();    
+    return await this.productService.productRepository.find();    
   }
 
   @Get('both')
   async both() {
     console.log('showing both');    
-    const products = await this.productService.findAll();     
+    const products = await this.productService.productRepository.find();     
     return { products};
   }
 
   @Get(':id([0-9])')
   async product(@Param('id', ParseIntPipe) id: number,) {
     console.log('showing products');    
-    return await this.productService.findById(id);    
+    return await this.productService.productRepository.findOne(id);    
   }
   
 }
