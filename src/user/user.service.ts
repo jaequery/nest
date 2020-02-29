@@ -2,11 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Util } from '../util';
-
 import { User } from './user.entity';
 import { Product } from '../product/product.entity';
 
+import { Util } from '../util';
 const util = new Util;
 
 @Injectable()
