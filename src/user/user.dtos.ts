@@ -6,19 +6,19 @@ export class UserRegisterDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  public email: string;
+  email: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  public password: string;
+  password: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  public first_name: string;
+  first_name: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  public last_name: string;
+  last_name: string;
 
 }
 
@@ -27,10 +27,10 @@ export class UserLoginDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  public email: string;
+  email: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  public password: string;
+  password: string;
 
 }

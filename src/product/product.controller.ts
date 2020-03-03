@@ -1,5 +1,7 @@
-import { Controller, Param, Get, ParseIntPipe } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Param, Body, Post, Get, ParseIntPipe } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { FindAllDto } from '../app.dtos';
 import { ProductService } from './product.service';
 
 @ApiTags('Products')
@@ -11,23 +13,14 @@ export class ProductController {
   ) { }
 
   @Get()
-  async getProducts() {
-    return await this.productService.productRepository.find();    
+  @ApiOperation({ summary: 'retrieves a list' })
+  async getAll(@Param() findAllDto: FindAllDto) {
+    return await this.productService.findAll(findAllDto);
   }
-
-  @Get('hello')
-  hello(){
-    return "hello";
-  }
-
-
-  @Get('something')
-  something () {
-    return { name: 'some thing' };
-  }
-
+  
   @Get(':id([0-9])')
-  async getProduct(@Param('id', ParseIntPipe) id: number,) {
+  @ApiOperation({ summary: 'retrieves a record' })
+  async getOne(@Param('id', ParseIntPipe) id: number,) {
     return await this.productService.productRepository.findOne(id);    
   }
   

@@ -3,6 +3,7 @@ import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 
+import { AppService } from '../app.service';
 import { User } from './user.entity';
 import { UserLoginDto, UserRegisterDto } from './user.dtos';
 import { Product } from '../product/product.entity';
@@ -11,16 +12,18 @@ import { Util } from '../util';
 const util = new Util;
 
 @Injectable()
-export class UserService {
+export class UserService extends AppService {
   
   constructor(
     @InjectRepository(User) public userRepository: Repository<User>,
     @InjectRepository(Product) public productRepository: Repository<Product>
-  ) { }
+  ) { 
+    super(userRepository);
+  }
 
-  async login(userLoginDto: UserLoginDto) {
+  async login(userLoginDto: UserLoginDto) {    
     const user = await this.userRepository.createQueryBuilder('user').where("email = :email").setParameters({email: userLoginDto.email}).getOne();   
-    if (await bcrypt.compare(userLoginDto.password, user.password)){
+    if (await bcrypt.compare(userLoginDto.password, userLoginDto.password)){
       return user;      
     }
     throw new UnauthorizedException;
