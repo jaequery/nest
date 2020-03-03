@@ -1,7 +1,7 @@
-import { Controller, Body, Param, Post, Get, ParseIntPipe } from '@nestjs/common';
+import { Controller, Param, Body, Post, Get, ParseIntPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { CreateUserDto } from './user.dto';
+import { UserRegisterDto, UserLoginDto } from './user.dtos';
 
 @ApiTags('Users')
 @Controller('users')
@@ -16,16 +16,17 @@ export class UserController {
     return await this.userService.userRepository.find();    
   }
 
-  @Get(':id([0-9])')
-  async getUser(@Param('id', ParseIntPipe) id: number,) {
-    return await this.userService.userRepository.findOne(id);    
-  }
-
   @Post()
-  async saveUser(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.userRepository.save(createUserDto);    
+  async create(@Body() userRegisterDto: UserRegisterDto) {
+    console.log('payload', userRegisterDto);
+    const user = this.userService.create(userRegisterDto);
+    return user;
   }
 
-
+  @Post('login')
+  async login(@Body() userLoginDto: UserLoginDto) {
+    const user = this.userService.login(userLoginDto);
+    return user;
+  }
   
 }
