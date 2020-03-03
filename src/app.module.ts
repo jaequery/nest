@@ -8,15 +8,18 @@ import { User } from './user/user.entity';
 import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost.docker',
-      port: 5432,
-      username: 'root',
-      password: '',
-      database: 'jae',
+      type: process.env.DB_TYPE as any,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT as any,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       entities: [
         __dirname + '/**/*.entity{.ts,.js}',
       ],
@@ -25,7 +28,7 @@ import { UserService } from './user/user.service';
     }),
     TypeOrmModule.forFeature([
       Product, User
-    ])    
+    ])
   ],
   controllers: [
     ProductController, UserController
