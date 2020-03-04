@@ -4,7 +4,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+
+  const app = await NestFactory.create(AppModule, {
+    logger: true
+  });
   app.useGlobalPipes(new ValidationPipe());
 
   const options = new DocumentBuilder()
@@ -14,10 +17,9 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-
   SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT);
-  console.log(`server running on port ${process.env.PORT}`);
+  Logger.log(`server running on port ${process.env.PORT}`);
 }
 bootstrap();
